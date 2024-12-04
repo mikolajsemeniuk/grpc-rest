@@ -1,0 +1,105 @@
+swagger: "2.0"
+info:
+  title: Cart API
+  description: API for managing a shopping cart
+  version: 1.0.0
+tags:
+  - name: CartService
+schemes:
+  - http
+consumes:
+  - application/yaml
+produces:
+  - application/yaml
+paths:
+  /:
+    get:
+      operationId: CartService_HostElements
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/cartTemplateResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      tags:
+        - CartService
+  /cart:
+    post:
+      operationId: CartService_AddItem
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/cartAddItemResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/cartAddItemRequest'
+      tags:
+        - CartService
+  /docs:
+    get:
+      operationId: CartService_HostSwagger
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/cartTemplateResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      tags:
+        - CartService
+definitions:
+  cartAddItemRequest:
+    type: object
+    properties:
+      itemId:
+        type: string
+      name:
+        type: string
+      quantity:
+        type: integer
+        format: int32
+      price:
+        type: number
+        format: double
+  cartAddItemResponse:
+    type: object
+    properties:
+      message:
+        type: string
+  cartTemplateResponse:
+    type: object
+    properties:
+      content:
+        type: string
+  protobufAny:
+    type: object
+    properties:
+      '@type':
+        type: string
+    additionalProperties: {}
+  rpcStatus:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      details:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/protobufAny'

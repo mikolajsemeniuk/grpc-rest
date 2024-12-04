@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package cart;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = ".;cart";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Cart API";
+    version: "1.0.0";
+    description: "API for managing a shopping cart";
+  }
+  schemes: HTTP;
+  consumes: "application/json";
+  produces: "application/json";
+};
+
+service CartService {
+  rpc AddItem(AddItemRequest) returns (AddItemResponse) {
+    option (google.api.http) = {
+      post: "/cart"
+      body: "*"
+    };
+  }
+
+  rpc HostSwagger(google.protobuf.Empty) returns (TemplateResponse) {
+    option (google.api.http) = {
+      get: "/docs"
+    };
+  }
+
+  rpc HostElements(google.protobuf.Empty) returns (TemplateResponse) {
+    option (google.api.http) = {
+      get: "/"
+    };
+  }
+}
+
+message TemplateResponse {
+  string content = 1;
+}
+
+message AddItemRequest {
+  string item_id = 1;    
+  string name = 2;       
+  int32 quantity = 3;    
+  double price = 4;      
+}
+
+message AddItemResponse {
+  string message = 1;
+}
