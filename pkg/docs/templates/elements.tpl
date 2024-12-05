@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <elements-api apiDescriptionUrl="./docs" router="hash" />
+    <elements-api apiDescriptionUrl="./openapi" router="hash" />
 </body>
 
 </html>
