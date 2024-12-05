@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package cart;
+package pb;
 
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
-import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
-option go_package = ".;cart";
+option go_package = ".;pb";
 
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
@@ -26,29 +26,14 @@ service CartService {
       body: "*"
     };
   }
-
-  rpc HostSwagger(google.protobuf.Empty) returns (TemplateResponse) {
-    option (google.api.http) = {
-      get: "/docs"
-    };
-  }
-
-  rpc HostElements(google.protobuf.Empty) returns (TemplateResponse) {
-    option (google.api.http) = {
-      get: "/"
-    };
-  }
-}
-
-message TemplateResponse {
-  string content = 1;
 }
 
 message AddItemRequest {
   string item_id = 1;    
   string name = 2;       
   int32 quantity = 3;    
-  double price = 4;      
+  double price = 4;
+  google.protobuf.Timestamp created = 5;     
 }
 
 message AddItemResponse {

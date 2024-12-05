@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"test/pkg/cart"
+	"test/pkg/pb"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
@@ -27,7 +28,7 @@ func main() {
 
 		server := grpc.NewServer()
 
-		cart.RegisterCartServiceServer(server, cart.NewHandler())
+		pb.RegisterCartServiceServer(server, cart.NewHandler())
 
 		reflection.Register(server)
 
@@ -39,7 +40,7 @@ func main() {
 	mux := runtime.NewServeMux()
 
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	if err := cart.RegisterCartServiceHandlerFromEndpoint(ctx, mux, grpcPort, opts); err != nil {
+	if err := pb.RegisterCartServiceHandlerFromEndpoint(ctx, mux, grpcPort, opts); err != nil {
 		log.Fatalf("Failed to start REST gateway: %v", err)
 	}
 

@@ -8,24 +8,10 @@ tags:
 schemes:
   - http
 consumes:
-  - application/yaml
+  - application/json
 produces:
-  - application/yaml
+  - application/json
 paths:
-  /:
-    get:
-      operationId: CartService_HostElements
-      responses:
-        "200":
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/cartTemplateResponse'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/rpcStatus'
-      tags:
-        - CartService
   /cart:
     post:
       operationId: CartService_AddItem
@@ -33,7 +19,7 @@ paths:
         "200":
           description: A successful response.
           schema:
-            $ref: '#/definitions/cartAddItemResponse'
+            $ref: '#/definitions/pbAddItemResponse'
         default:
           description: An unexpected error response.
           schema:
@@ -43,25 +29,11 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/cartAddItemRequest'
-      tags:
-        - CartService
-  /docs:
-    get:
-      operationId: CartService_HostSwagger
-      responses:
-        "200":
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/cartTemplateResponse'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/rpcStatus'
+            $ref: '#/definitions/pbAddItemRequest'
       tags:
         - CartService
 definitions:
-  cartAddItemRequest:
+  pbAddItemRequest:
     type: object
     properties:
       itemId:
@@ -74,15 +46,13 @@ definitions:
       price:
         type: number
         format: double
-  cartAddItemResponse:
+      created:
+        type: string
+        format: date-time
+  pbAddItemResponse:
     type: object
     properties:
       message:
-        type: string
-  cartTemplateResponse:
-    type: object
-    properties:
-      content:
         type: string
   protobufAny:
     type: object
