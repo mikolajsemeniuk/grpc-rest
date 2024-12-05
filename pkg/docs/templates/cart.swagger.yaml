@@ -36,8 +36,6 @@ definitions:
   pbAddItemRequest:
     type: object
     properties:
-      itemId:
-        type: string
       name:
         type: string
       quantity:
